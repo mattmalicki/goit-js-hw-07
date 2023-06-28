@@ -10,13 +10,13 @@ galleryList.addEventListener("click", imageClick);
 function createGalleryMarkups(array) {
   let markupsString = "";
   array.forEach((element) => {
-    markupsString += `<li class="gallery__item">
+    markupsString += `<div class="gallery__item">
         <a class="gallery__link" href="${element.original}">
         <img src="${element.preview}"
         data-source="${element.original}" 
         alt="${element.description}"
         class="gallery__image" />
-        </a></li>`;
+        </a></div>`;
   });
   return markupsString;
 }
