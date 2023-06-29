@@ -1,7 +1,6 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-console.log(galleryItems);
 const galleryList = document.querySelector("ul.gallery");
 galleryList.insertAdjacentHTML("beforeend", createGalleryMarkups(galleryItems));
 
@@ -26,16 +25,23 @@ function imageClick(event) {
   if (event.target.nodeName !== "IMG") {
     return;
   }
-
-  const instance = basicLightbox.create(`
-    <img src="${event.target.dataset.source}" width="1280" />
-`);
-
-  instance.show();
-
-  galleryList.addEventListener("keydown", (event) => {
+  const closing = (event) => {
     if (event.code === "Escape") {
       instance.close();
     }
-  });
+  };
+
+  const instance = basicLightbox.create(
+    `<img src="${event.target.dataset.source}" width="1280" />`,
+    {
+      onClose: (instance) => {
+        console.log("hi", instance);
+        galleryList.removeEventListener("keydown", closing);
+      },
+    }
+  );
+
+  instance.show();
+
+  galleryList.addEventListener("keydown", closing);
 }
